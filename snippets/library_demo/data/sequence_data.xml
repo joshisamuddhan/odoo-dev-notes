@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_library_loan" model="ir.sequence">
+            <field name="name">Library Loan</field>
+            <field name="code">library.loan</field>
+            <field name="prefix">LN/%(year)s/</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

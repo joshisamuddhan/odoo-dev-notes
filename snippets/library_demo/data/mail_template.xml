@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="mail_template_loan_confirm" model="mail.template">
+            <field name="name">Library: Loan Confirmation</field>
+            <field name="model_id" ref="model_library_loan"/>
+            <field name="subject">Loan {{ object.name }} confirmed</field>
+            <field name="email_to">{{ object.partner_id.email }}</field>
+            <field name="body_html" type="html">
+                <p>Dear <t t-out="object.partner_id.name"/>,</p>
+                <p>You borrowed <b><t t-out="object.book_id.name"/></b>.
+                   Please return it by <t t-out="object.date_due"/>.</p>
+            </field>
+        </record>
+    </data>
+</odoo>

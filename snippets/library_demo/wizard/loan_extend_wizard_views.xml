@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_loan_extend_wizard_form" model="ir.ui.view">
+        <field name="name">library.loan.extend.wizard.form</field>
+        <field name="model">library.loan.extend.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="days"/>
+                    <field name="loan_ids" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button name="action_extend" string="Extend" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action; binding_model_id puts it in the list "Action" menu -->
+    <record id="action_loan_extend_wizard" model="ir.actions.act_window">
+        <field name="name">Extend Loans</field>
+        <field name="res_model">library.loan.extend.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_library_loan"/>
+        <field name="binding_view_types">list,form</field>
+    </record>
+</odoo>

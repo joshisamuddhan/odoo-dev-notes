@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_library_loan_list" model="ir.ui.view">
+        <field name="name">library.loan.list</field>
+        <field name="model">library.loan</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="state == 'overdue'" decoration-success="state == 'returned'">
+                <field name="name"/>
+                <field name="book_id"/>
+                <field name="partner_id"/>
+                <field name="date_out"/>
+                <field name="date_due"/>
+                <field name="days_overdue"/>
+                <field name="fine" sum="Total fine"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_library_loan_form" model="ir.ui.view">
+        <field name="name">library.loan.form</field>
+        <field name="model">library.loan</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_return" string="Return" type="object"
+                            invisible="state not in ('open', 'overdue')"/>
+                    <button name="%(library_demo.action_loan_extend_wizard)d" string="Extend" type="action"
+                            invisible="state not in ('open', 'overdue')"/>
+                    <button name="%(library_demo.action_report_library_loan)d" string="Print" type="action"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,open,returned"/>
+                </header>
+                <sheet>
+                    <h1><field name="name"/></h1>
+                    <group>
+                        <group>
+                            <field name="book_id" readonly="state != 'draft'"/>
+                            <field name="partner_id" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="date_out"/>
+                            <field name="date_due"/>
+                            <field name="date_return"/>
+                            <field name="days_overdue"/>
+                            <field name="fine"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_library_loan" model="ir.actions.act_window">
+        <field name="name">Loans</field>
+        <field name="res_model">library.loan</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
