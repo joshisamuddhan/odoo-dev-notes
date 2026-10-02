@@ -8,6 +8,8 @@
 | `Invalid field 'x' on model 'y'` (view) | field missing/typo or dependency module not installed | add field/depends |
 | `Field 'x' used in domain/attrs must be in view` (older) | field referenced in `attrs/domain` not in form | add `<field name="x" invisible="1"/>` |
 | `Unknown field "x" in "invisible"` / `Invalid view` (v17+) | `invisible="x == 1"` uses field absent in view | include the field in the view |
+| `Unsearchable field 'x' in path ... in domain of <filter>` (view validation) | non-stored compute used in a filter/domain | add `search="_search_x"` method or `store=True` |
+| `Invalid version '18.0.1.0.0'. Modules should have a version ... 17.0.x` | module of another Odoo series inside the addons path | move it out of the path / fix manifest `version` |
 | `ValueError: Wrong value for ... selection` | write value not in Selection | use valid key |
 | `ERROR: duplicate key value violates unique constraint` | `_sql_constraints` hit | catch/validate earlier or friendly message |
 | `null value in column "x" violates not-null` | `required=True` field missing in `create` | pass value or give `default` |

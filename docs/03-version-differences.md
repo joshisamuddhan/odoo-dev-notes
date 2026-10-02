@@ -27,6 +27,7 @@ Then copy syntax from a core view of THAT version (e.g. `addons/sale/views/sale_
 | `_()` | `_("x %s") % v` | `_("x %s", v)` lazy | same | same |
 | `read_group` | `read_group(domain, fields, groupby)` | **`_read_group(domain, groupby, aggregates)`** new | same (tested `["__count"]`) | same |
 | Session auth | `authenticate(db, login, pw, env)` | `authenticate(db, {"login","password","type":"password"})` | same | same |
+| Kanban card template ✔ | `kanban-box` | `kanban-box` | **`t-name="card"`** | `card` |
 | Python | 3.7–3.10 | 3.10+ | 3.10–3.12 | 3.10+ |
 | JS | OWL 1 (v14/15), OWL 2 (v16+) | OWL 2 | OWL 2 | OWL 2 |
 | Groups | `res.groups` + `category_id` | same | same | `res.groups.privilege` introduced ✔ (see `base_groups.xml`) |
@@ -57,3 +58,7 @@ Then copy syntax from a core view of THAT version (e.g. `addons/sale/views/sale_
 ## Run differences
 - ≤ v16 DB options same. v17+ `--db_user/--db_host` unchanged. `odoo-bin shell -d db` for REPL (`env`, `self`).
 - Run tests: `./odoo-bin -d test -i mymodule --test-enable --test-tags /mymodule --stop-after-init`.
+
+## Gotchas found while testing this kit (all 4 versions: 15/16/17/18 installed fresh)
+- A manifest whose `version` doesn't start with the running series (e.g. `18.0.x` on Odoo 17) breaks loading when that module sits inside a folder passed to `--addons-path` (observed on v17 and v18; Odoo 15 accepted a `16.0` manifest). Keep other-version modules out of the path.
+- A **non-stored computed field used in a filter/domain** fails view validation in v18 ("Unsearchable field") — add `search=` or `store=True`.

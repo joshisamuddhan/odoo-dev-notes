@@ -1,9 +1,10 @@
 # Odoo Dev Notes & Starter Kit
 
 Personal, generic reference for timed practical Odoo tasks. **No client code or credentials** — the demo module is a made-up library app.
-Tested on this machine against Odoo 18 community: module installs from scratch, 5 unit tests pass, REST API verified with curl.
+Tested on this machine: `library_demo` (Odoo 18) installs, 5 tests pass, REST API verified with curl; `minimal_module` variants install and pass their tests on Odoo 18, 17, 16 and 15; `view_gallery` installs on 18.
 
 ## Start here (on test day)
+0. `docs/00-first-10-minutes.md` — one page: find version, set up, prove the loop
 1. `docs/01-task-day-playbook.md` — time plan, questions to ask, build order, final checklist
 2. Find the Odoo version → `docs/03-version-differences.md` (top section)
 3. Copy the skeleton: `snippets/library_demo/` (rename the module, models, xml ids)
@@ -12,6 +13,7 @@ Tested on this machine against Odoo 18 community: module installs from scratch, 
 ## Index
 | File | What |
 |---|---|
+| `docs/00-first-10-minutes.md` | One-page setup/version/command sheet (print this) |
 | `docs/01-task-day-playbook.md` | Timeline, questions for the interviewer, README template |
 | `docs/02-odoo-cheatsheet.md` | Models, fields, ORM, views, security, wizard, reports, controllers |
 | `docs/03-version-differences.md` | v14→v19 syntax changes (verified against source) |
@@ -23,7 +25,10 @@ Tested on this machine against Odoo 18 community: module installs from scratch, 
 | `docs/09-security-performance-checklist.md` | Final review checklist |
 | `docs/10-quick-qa.md` | Short answers to common Odoo questions |
 | `docs/11-practice-tasks.md` | Timed mock tasks + rubric |
+| `docs/12-xml-snippets.md` | Copy-paste XML + version translation table |
 | `snippets/library_demo/` | Complete Odoo 18 module: models, views, security, wizard, cron, mail, report, REST API, tests |
+| `snippets/minimal_module/` (+ `_v17`, `_v16`) | Smallest useful module (tests included) for Odoo 18 / 17 / 16(15) |
+| `snippets/view_gallery/` | Every view type + view inheritance + server action (Odoo 18) |
 | `snippets/python/` | retry/timing decorators, pagination, HMAC, XML-RPC, rate limiter, graph cycle… (`python3 selftest.py`) |
 
 ## Use the skeleton

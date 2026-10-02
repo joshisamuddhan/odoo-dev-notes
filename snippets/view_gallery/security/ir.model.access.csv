@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gallery_stage,gallery.stage,model_gallery_stage,base.group_user,1,1,1,1
+access_gallery_tag,gallery.tag,model_gallery_tag,base.group_user,1,1,1,1
+access_gallery_item,gallery.item,model_gallery_item,base.group_user,1,1,1,1
+access_gallery_item_line,gallery.item.line,model_gallery_item_line,base.group_user,1,1,1,1

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ============ LIST (editable inline) ============ -->
+    <record id="view_gallery_item_list" model="ir.ui.view">
+        <field name="name">gallery.item.list</field>
+        <field name="model">gallery.item</field>
+        <field name="arch" type="xml">
+            <list multi_edit="1" decoration-info="state == 'new'" decoration-muted="state == 'done'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="stage_id"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="show"/>
+                <field name="priority" widget="priority" optional="hide"/>
+                <field name="amount" sum="Total" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============ FORM ============ -->
+    <record id="view_gallery_item_form" model="ir.ui.view">
+        <field name="name">gallery.item.form</field>
+        <field name="model">gallery.item</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_done" string="Mark Done" type="object" class="btn-primary"
+                            invisible="state == 'done'"/>
+                    <field name="stage_id" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Item name"/></h1>
+                    </div>
+                    <group>
+                        <group string="General">
+                            <field name="partner_id" options="{'no_create': True}"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="priority" widget="priority"/>
+                        </group>
+                        <group string="Schedule">
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="amount"/>
+                            <field name="state" readonly="1"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines" name="lines">
+                            <!-- inline editable one2many -->
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="qty"/>
+                                    <field name="price"/>
+                                    <field name="subtotal" sum="Total"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="line_total"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="color" widget="color_picker"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============ KANBAN (v18: t-name="card"; v17/16: "kanban-box") ============ -->
+    <record id="view_gallery_item_kanban" model="ir.ui.view">
+        <field name="name">gallery.item.kanban</field>
+        <field name="model">gallery.item</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id" highlight_color="color" quick_create="1" sample="1">
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <field name="name" class="fw-bold fs-5"/>
+                        <field name="partner_id" class="text-muted"/>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        <footer>
+                            <field name="priority" widget="priority"/>
+                            <field name="activity_ids" widget="kanban_activity"/>
+                            <field name="user_id" widget="many2one_avatar_user" class="ms-auto"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ============ CALENDAR ============ -->
+    <record id="view_gallery_item_calendar" model="ir.ui.view">
+        <field name="name">gallery.item.calendar</field>
+        <field name="model">gallery.item</field>
+        <field name="arch" type="xml">
+            <calendar date_start="date_start" date_stop="date_end" string="Items" mode="month" color="user_id" quick_create="0">
+                <field name="name"/>
+                <field name="partner_id" avatar_field="avatar_128"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- ============ PIVOT & GRAPH ============ -->
+    <record id="view_gallery_item_pivot" model="ir.ui.view">
+        <field name="name">gallery.item.pivot</field>
+        <field name="model">gallery.item</field>
+        <field name="arch" type="xml">
+            <pivot string="Analysis" sample="1">
+                <field name="stage_id" type="row"/>
+                <field name="date_start" interval="month" type="col"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_gallery_item_graph" model="ir.ui.view">
+        <field name="name">gallery.item.graph</field>
+        <field name="model">gallery.item</field>
+        <field name="arch" type="xml">
+            <graph string="Amount by stage" type="bar" sample="1">
+                <field name="stage_id"/>
+                <field name="amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ============ ACTIVITY ============ -->
+    <record id="view_gallery_item_activity" model="ir.ui.view">
+        <field name="name">gallery.item.activity</field>
+        <field name="model">gallery.item</field>
+        <field name="arch" type="xml">
+            <activity string="Items">
+                <templates>
+                    <div t-name="activity-box">
+                        <field name="name" display="full"/>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+    <!-- ============ SEARCH ============ -->
+    <record id="view_gallery_item_search" model="ir.ui.view">
+        <field name="name">gallery.item.search</field>
+        <field name="model">gallery.item</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Name or customer"
+                       filter_domain="['|', ('name', 'ilike', self), ('partner_id', 'child_of', self)]"/>
+                <field name="tag_ids"/>
+                <field name="user_id"/>
+                <filter name="my" string="My Items" domain="[('user_id', '=', uid)]"/>
+                <filter name="urgent" string="Urgent" domain="[('priority', '=', '3')]"/>
+                <separator/>
+                <filter name="this_month" string="This Month"
+                        domain="[('date_start', '&gt;=', (context_today().replace(day=1)).strftime('%Y-%m-%d'))]"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_stage" string="Stage" context="{'group_by': 'stage_id'}"/>
+                    <filter name="group_user" string="Responsible" context="{'group_by': 'user_id'}"/>
+                    <filter name="group_month" string="Start (month)" context="{'group_by': 'date_start:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============ ACTION with several views ============ -->
+    <record id="action_gallery_item" model="ir.actions.act_window">
+        <field name="name">Gallery Items</field>
+        <field name="res_model">gallery.item</field>
+        <field name="view_mode">kanban,list,form,calendar,pivot,graph,activity</field>
+        <field name="context">{'search_default_my': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first item</p>
+            <p>Items appear in every view type here.</p>
+        </field>
+    </record>
+
+    <!-- ============ SERVER ACTION (appears in list "Actions" menu) ============ -->
+    <record id="server_action_gallery_done" model="ir.actions.server">
+        <field name="name">Mark as Done</field>
+        <field name="model_id" ref="model_gallery_item"/>
+        <field name="binding_model_id" ref="model_gallery_item"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">records.action_done()</field>
+    </record>
+
+    <record id="action_gallery_stage" model="ir.actions.act_window">
+        <field name="name">Stages</field>
+        <field name="res_model">gallery.stage</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ============ MENUS (after the actions they point to) ============ -->
+    <menuitem id="menu_gallery_root" name="Gallery" sequence="90"/>
+    <menuitem id="menu_gallery_items" parent="menu_gallery_root" action="action_gallery_item" sequence="1"/>
+    <menuitem id="menu_gallery_config" name="Configuration" parent="menu_gallery_root" sequence="99"/>
+    <menuitem id="menu_gallery_stages" parent="menu_gallery_config" action="action_gallery_stage" sequence="1"/>
+</odoo>
