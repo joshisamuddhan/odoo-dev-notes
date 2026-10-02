@@ -48,3 +48,6 @@ Which version? May I use the web/docs? May I `git init`? Which DB to use? Is a R
 3. Wrong syntax for the version (`<list>` vs `<tree>`, `attrs`).
 4. Forgot `-u` after changing XML/fields (or restart after Python).
 5. Non-stored compute used in a filter/domain without `search=` method (or `store=True`).
+
+## If Odoo is NOT installed on the machine
+See `docs/13-odoo-setup-by-version.md` (Python per version, venv, PostgreSQL, conf) or run `scripts/setup_odoo.sh <version>`.
