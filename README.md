@@ -27,6 +27,7 @@ Tested on this machine: `library_demo` (Odoo 18) installs, 5 tests pass, REST AP
 | `docs/11-practice-tasks.md` | Timed mock tasks + rubric |
 | `docs/13-odoo-setup-by-version.md` | Full setup guide: Python per version, pyenv/uv/venv, PostgreSQL, conf, run, Docker, troubleshooting |
 | `scripts/setup_odoo.sh` | One-command install of any Odoo 14–19 into its own venv (tested on 16 and 17) |
+| `docs/14-functional-flows.md` | Order-to-cash, procure-to-pay, inventory, accounting, HR flows: models, states, methods, journal entries |
 | `docs/12-xml-snippets.md` | Copy-paste XML + version translation table |
 | `snippets/library_demo/` | Complete Odoo 18 module: models, views, security, wizard, cron, mail, report, REST API, tests |
 | `snippets/minimal_module/` (+ `_v17`, `_v16`) | Smallest useful module (tests included) for Odoo 18 / 17 / 16(15) |
